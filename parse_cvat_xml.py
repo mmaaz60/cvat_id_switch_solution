@@ -53,30 +53,35 @@ class ParseCVATXML:
         new_track_2 = CVATTrack(track_2.id, track_2.label, track_2.shape)
 
         for track_frame in track_1.track_frames:
-            if track_frame.frame_no <= frame_no:
-                if track_frame.frame_no == frame_no:
-                    new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
-                                          track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
-                else:
-                    new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
-                                          track_frame.ybr, track_frame.outside, track_frame.occluded,
-                                          track_frame.keyframe)
+            if track_frame.frame_no < frame_no:
+                new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded,
+                                      track_frame.keyframe)
+            elif track_frame.frame_no == frame_no:
+                new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
+            elif track_frame.frame_no == frame_no + 1:
+                new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
             else:
                 new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
                                       track_frame.ybr, track_frame.outside, track_frame.occluded, track_frame.keyframe)
 
         for track_frame in track_2.track_frames:
-            if track_frame.frame_no <= frame_no:
-                if track_frame.frame_no == frame_no:
-                    new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
-                                          track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
-                else:
-                    new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
-                                          track_frame.ybr, track_frame.outside, track_frame.occluded,
-                                          track_frame.keyframe)
+            if track_frame.frame_no < frame_no:
+                new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded,
+                                      track_frame.keyframe)
+            elif track_frame.frame_no == frame_no:
+                new_track_2.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
+            elif track_frame.frame_no == frame_no + 1:
+                new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
+                                      track_frame.ybr, track_frame.outside, track_frame.occluded, 1)
             else:
                 new_track_1.add_frame(track_frame.frame_no, track_frame.xtl, track_frame.ytl, track_frame.xbr,
                                       track_frame.ybr, track_frame.outside, track_frame.occluded, track_frame.keyframe)
+
         new_track_1.track_frames.sort(key=lambda x: x.frame_no)
         new_track_2.track_frames.sort(key=lambda x: x.frame_no)
         self.cvat_tracks[id1], self.cvat_tracks[id2] = new_track_1, new_track_2
