@@ -71,13 +71,13 @@ class ParseCVATXML:
         new_track_2.track_frames.sort(key=lambda x: x.frame_no)
         self.cvat_tracks[id1], self.cvat_tracks[id2] = new_track_1, new_track_2
 
-    def dump_cvat_xml(self, xml_file_name):
+    def dump_cvat_xml(self, xml_source, xml_destination):
         xml_object = XMLWriter("annotations")
-        xml_object.read_from_file("annotations.xml")
+        xml_object.read_from_file(xml_source)
         xml_object.remove_tracks()
 
         for i in range(2):
             cvat_track = self.cvat_tracks[i]
             xml_object.add_track(cvat_track)
 
-        xml_object.dump_xml(xml_file_name)
+        xml_object.dump_xml(xml_destination)
