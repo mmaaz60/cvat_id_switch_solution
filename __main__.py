@@ -16,7 +16,7 @@ def main():
 	frame_no_list = config['swap_labels']['frame_no_list'].split(':')
 
 	for track_ids, frame_no in zip(track_ids_list, frame_no_list):
-		track_ids = [int(i) for i in track_ids.split(',')]
+		track_ids = [int(i)-1 for i in track_ids.split(',')]
 		xml_parser.swap_track_labels(track_ids, int(frame_no))
 
 	xml_parser.dump_cvat_xml(xml_source, xml_destination)

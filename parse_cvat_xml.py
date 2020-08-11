@@ -91,7 +91,7 @@ class ParseCVATXML:
         xml_object.read_from_file(xml_source)
         xml_object.remove_tracks()
 
-        for i in range(2):
+        for i in range(len(self.cvat_tracks)):
             cvat_track = self.cvat_tracks[i]
             xml_object.add_track(cvat_track)
 
